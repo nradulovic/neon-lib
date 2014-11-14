@@ -66,7 +66,8 @@ typedef struct nqueue nqueue;
 /*===================================================  FUNCTION PROTOTYPES  ==*/
 
 
-static PORT_C_INLINE void nqueue_init(
+PORT_C_INLINE 
+void nqueue_init(
     struct nqueue *             queue,
     void **                     buffer,
     size_t                      size)
@@ -80,7 +81,8 @@ static PORT_C_INLINE void nqueue_init(
 
 
 
-static PORT_C_INLINE void nqueue_term(
+PORT_C_INLINE 
+void nqueue_term(
     struct nqueue *             queue)
 {
     queue->buffer = NULL;
@@ -92,7 +94,8 @@ static PORT_C_INLINE void nqueue_term(
 
 
 
-static PORT_C_INLINE void nqueue_put_head(
+PORT_C_INLINE 
+void nqueue_put_head(
     struct nqueue *             queue,
     void *                      item)
 {
@@ -104,7 +107,10 @@ static PORT_C_INLINE void nqueue_put_head(
     queue->empty--;
 }
 
-static PORT_C_INLINE void nqueue_put_tail(
+
+
+PORT_C_INLINE 
+void nqueue_put_tail(
     struct nqueue *             queue,
     void *                      item)
 {
@@ -117,7 +123,8 @@ static PORT_C_INLINE void nqueue_put_tail(
 
 
 
-static PORT_C_INLINE void * nqueue_get_tail(
+PORT_C_INLINE 
+void * nqueue_get_tail(
     struct nqueue *             queue)
 {
     void *                      tmp;
@@ -134,7 +141,8 @@ static PORT_C_INLINE void * nqueue_get_tail(
 
 
 
-static PORT_C_INLINE size_t nqueue_size(
+PORT_C_INLINE 
+size_t nqueue_size(
     const struct nqueue *       queue)
 {
     return ((size_t)queue->size);
@@ -142,7 +150,8 @@ static PORT_C_INLINE size_t nqueue_size(
 
 
 
-static PORT_C_INLINE size_t nqueue_occupied(
+PORT_C_INLINE 
+size_t nqueue_occupied(
     const struct nqueue *       queue)
 {
     return ((size_t)(queue->size - queue->empty));
@@ -150,7 +159,8 @@ static PORT_C_INLINE size_t nqueue_occupied(
 
 
 
-static PORT_C_INLINE size_t nqueue_unoccupied(
+PORT_C_INLINE 
+size_t nqueue_unoccupied(
     const struct nqueue *       queue)
 {
     return ((size_t)queue->empty);
@@ -158,7 +168,8 @@ static PORT_C_INLINE size_t nqueue_unoccupied(
 
 
 
-static PORT_C_INLINE void ** nqueue_buffer(
+PORT_C_INLINE 
+void ** nqueue_buffer(
     const struct nqueue *       queue)
 {
     return (queue->buffer);
@@ -166,7 +177,8 @@ static PORT_C_INLINE void ** nqueue_buffer(
 
 
 
-static PORT_C_INLINE bool nqueue_is_full(
+PORT_C_INLINE 
+bool nqueue_is_full(
     const struct nqueue *       queue)
 {
     if (queue->empty == UINT32_C(0)) {
@@ -178,7 +190,8 @@ static PORT_C_INLINE bool nqueue_is_full(
 
 
 
-static PORT_C_INLINE bool nqueue_is_empty(
+PORT_C_INLINE 
+bool nqueue_is_empty(
     const struct nqueue *       queue)
 {
     if (queue->empty == queue->size) {
@@ -195,6 +208,6 @@ static PORT_C_INLINE bool nqueue_is_empty(
 
 /*================================*//** @cond *//*==  CONFIGURATION ERRORS  ==*/
 /** @endcond *//** @} *//******************************************************
- * END of nqueue.h
+ * END of queue.h
  ******************************************************************************/
 #endif /* NQUEUE_H */
