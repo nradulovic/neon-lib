@@ -29,7 +29,7 @@
 
 /*=========================================================  INCLUDE FILES  ==*/
 
-#include "base/base.h"
+#include "lib/module.h"
 
 /*=========================================================  LOCAL MACRO's  ==*/
 /*======================================================  LOCAL DATA TYPES  ==*/
@@ -37,8 +37,8 @@
 /*=======================================================  LOCAL VARIABLES  ==*/
 /*======================================================  GLOBAL VARIABLES  ==*/
 
-PORT_C_UNUSED const PORT_C_ROM struct esModuleInfo esGlobalUnnamedModule = {
-    "Unnamed module",
+PORT_C_UNUSED const PORT_C_ROM struct nmodule_info g_unnamed_module =
+{
     "No description",
     "Unknown author",
     "Unknown file"

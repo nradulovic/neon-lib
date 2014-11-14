@@ -30,13 +30,10 @@
 
 /*=========================================================  INCLUDE FILES  ==*/
 
-#include <stdbool.h>
-#include <stddef.h>
-
 #include "plat/compiler.h"
 #include "arch/cpu.h"
-#include "arch/intr.h"
-#include "base/debug.h"
+#include "arch/isr.h"
+#include "lib/debug.h"
 
 /*=========================================================  LOCAL MACRO's  ==*/
 /*======================================================  LOCAL DATA TYPES  ==*/
@@ -48,38 +45,22 @@
 /*====================================  GLOBAL PUBLIC FUNCTION DEFINITIONS  ==*/
 
 /* 1)       This function will disable all interrupts to prevent any new
- *          interrupts to execute which can trigger another assert causing a
+ *          interrupts from executing which can trigger another assert causing a
  *          very confusing situation of why it failed.
  */
-PORT_C_NORETURN void debugAssert(
-    const PORT_C_ROM struct debugCobject_ * cObject,
-    const PORT_C_ROM char * expr,
-    const PORT_C_ROM char * msg) {
+PORT_C_NORETURN
+void nassert(
+    const PORT_C_ROM struct nmodule_info * module_info,
+    const PORT_C_ROM char *     fn,
+    uint32_t                    line,
+    const PORT_C_ROM char *     expr,
+    const PORT_C_ROM char *     msg)
+{
+    nisr_disable();
+    hook_at_failed_assert(module_info, fn, line, expr, msg);
+    ncpu_stop();
 
-    struct esDebugReport debugReport;
-
-    ES_INTR_DISABLE();
-
-    if (cObject->mod != NULL) {
-        debugReport.modName   = cObject->mod->name;
-        debugReport.modDesc   = cObject->mod->desc;
-        debugReport.modAuthor = cObject->mod->auth;
-        debugReport.modFile   = cObject->mod->file;
-    } else {
-        debugReport.modName   = "Unnamed";
-        debugReport.modDesc   = "not specified";
-        debugReport.modAuthor = "not specified";
-        debugReport.modFile   = "not specified";
-    }
-    debugReport.fnName    = cObject->fn;
-    debugReport.expr      = expr;
-    debugReport.msg       = msg;
-    debugReport.line      = cObject->line;
-    userAssert(
-        &debugReport);
-    ES_CPU_TERM();
-
-    while (true);
+    for (;;);
 }
 
 /*================================*//** @cond *//*==  CONFIGURATION ERRORS  ==*/

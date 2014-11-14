@@ -66,6 +66,19 @@
 # define CONFIG_ASSERT_INTERNAL         1
 #endif
 
+/**@brief       Scheduler priority levels
+ * @details     Possible values:
+ *              - Min: 3 (three priority levels)
+ *              - Max: 256
+ */
+#if !defined(CONFIG_PRIORITY_LEVELS)
+# define CONFIG_PRIORITY_LEVELS             32u
+#endif
+
+#if !defined(CONFIG_PRIORITY_BUCKETS)
+# define CONFIG_PRIORITY_BUCKETS            32u
+#endif
+
 /*================================*//** @cond *//*==  CONFIGURATION ERRORS  ==*/
 
 #if ((CONFIG_DEBUG != 1) && (CONFIG_DEBUG != 0))

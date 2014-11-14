@@ -35,22 +35,22 @@
 /*=========================================================  INCLUDE FILES  ==*/
 
 #include "plat/compiler.h"
-#include "base/error.h"
+#include "lib/error.h"
 
 /*===============================================================  MACRO's  ==*/
 
-/**@brief       Declare a module information card
- * @param       modName
+/**@brief       Declare a module information
+ * @param       name
  *              Module name : string
- * @param       modDesc
+ * @param       description
  *              Module description : string
- * @param       modAuth
+ * @param       author
  *              Module author : string
  * @api
  */
-#define ES_MODULE_INFO_CREATE(name, description, author)                        \
-    PORT_C_ROM struct PORT_C_UNUSED esModuleInfo LocalModuleInfo = {            \
-        name,                                                                   \
+#define NMODULE_INFO_CREATE(description, author)                                \
+    PORT_C_ROM struct PORT_C_UNUSED nmodule_info g_module_info =                \
+    {                                                                           \
         description,                                                            \
         author,                                                                 \
         PORT_C_FILE                                                             \
@@ -63,17 +63,22 @@ extern "C" {
 
 /*============================================================  DATA TYPES  ==*/
 
-struct esModuleInfo 
+/**@brief       Defines module information structure
+ * @api
+ */
+struct nmodule_info
 {
-    const PORT_C_ROM char * const PORT_C_ROM_VAR name;                          /**< @brief Module name                                     */
-    const PORT_C_ROM char * const PORT_C_ROM_VAR desc;                          /**< @brief Module description                              */
-    const PORT_C_ROM char * const PORT_C_ROM_VAR auth;                          /**< @brief Module author                                   */
-    const PORT_C_ROM char * const PORT_C_ROM_VAR file;                          /**< @brief Module source file                              */
+    const PORT_C_ROM char * const PORT_C_ROM_VAR desc;      
+                                        /**<@brief Module description         */
+    const PORT_C_ROM char * const PORT_C_ROM_VAR auth;
+                                        /**<@brief Module author              */
+    const PORT_C_ROM char * const PORT_C_ROM_VAR file;
+                                        /**<@brief Module source file         */
 };
 
 /*======================================================  GLOBAL VARIABLES  ==*/
 
-extern PORT_C_UNUSED const PORT_C_ROM struct esModuleInfo esGlobalUnnamedModule;
+extern PORT_C_UNUSED const PORT_C_ROM struct nmodule_info g_unnamed_module;
 
 /*===================================================  FUNCTION PROTOTYPES  ==*/
 /*--------------------------------------------------------  C++ extern end  --*/
