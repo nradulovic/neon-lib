@@ -22,9 +22,9 @@
  * @file
  * @author      Nenad Radulovic
  * @brief       Error handling implementation
- * @addtogroup  base_error
+ * @addtogroup  lib_error
  *********************************************************************//** @{ */
-/**@defgroup    base_error_impl Implementation
+/**@defgroup    lib_error_impl Implementation
  * @brief       Error handling Implementation
  * @{ *//*--------------------------------------------------------------------*/
 
@@ -36,16 +36,16 @@
 
 /**@brief       Expander for error text
  */
-#define ES_ERROR_TEXT_(a, b, c)                                                 \
-    c,
+#define ERROR_TEXT_(a, b, c)                c,
 
 /*======================================================  LOCAL DATA TYPES  ==*/
 /*=============================================  LOCAL FUNCTION PROTOTYPES  ==*/
 /*=======================================================  LOCAL VARIABLES  ==*/
 /*======================================================  GLOBAL VARIABLES  ==*/
 
-const PORT_C_ROM char * const PORT_C_ROM_VAR esGlobalErrorText[] = {
-    ES_ERROR_TABLE_(ES_ERROR_TEXT_)
+const PORT_C_ROM char * const PORT_C_ROM_VAR g_error_text[] = 
+{
+    ERROR_TABLE_(ERROR_TEXT_)
 };
 
 /*============================================  LOCAL FUNCTION DEFINITIONS  ==*/
