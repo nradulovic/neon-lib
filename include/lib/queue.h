@@ -35,7 +35,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include <common/compiler.h>
+#include <port/compiler.h>
 
 /*===============================================================  MACRO's  ==*/
 
@@ -211,3 +211,4 @@ bool nqueue_is_empty(
  * END of queue.h
  ******************************************************************************/
 #endif /* NLIB_QUEUE_H_ */
+

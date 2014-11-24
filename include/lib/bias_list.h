@@ -36,7 +36,6 @@
 #include <stdint.h>
 
 #include "port/compiler.h"
-#include "lib/list.h"
 
 /*===============================================================  MACRO's  ==*/
 
@@ -120,7 +119,7 @@ struct nbias_list * nbias_list_tail(
 
 
 PORT_C_INLINE
-struct nbias_list * NLIB_BIAS_LIST_H_ead(
+struct nbias_list * nbias_list_head(
     struct nbias_list *        list)
 {
     return (NDLIST_TO_BIAS_LIST(ndlist_prev(&list->list)));
@@ -174,6 +173,8 @@ void nbias_list_set_bias(
 
 /*================================*//** @cond *//*==  CONFIGURATION ERRORS  ==*/
 /** @endcond *//** @} *//******************************************************
+<<<<<<< HEAD
  * END of bias_list.h
  ******************************************************************************/
 #endif /* NLIB_BIAS_LIST_H_ */
+
