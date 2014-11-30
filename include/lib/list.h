@@ -36,6 +36,9 @@
 #include "plat/compiler.h"
 
 /*===============================================================  MACRO's  ==*/
+
+#define NDLIST_INIT(list)               {(list), (list)}
+
 /*------------------------------------------------------  C++ extern begin  --*/
 #ifdef __cplusplus
 extern "C" {
