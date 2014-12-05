@@ -36,6 +36,7 @@
 #include <stddef.h>
 
 #include <port/compiler.h>
+#include <port/cpu.h>
 
 /*===============================================================  MACRO's  ==*/
 
@@ -53,11 +54,11 @@ extern "C" {
  */
 struct nqueue
 {
-    void **             buffer;
-    uint32_t            head;
-    uint32_t            tail;
-    uint32_t            empty;
-    uint32_t            size;
+    void **                     buffer;
+    ncpu_reg                    head;
+    ncpu_reg                    tail;
+    ncpu_reg                    empty;
+    ncpu_reg                    size;
 };
 
 typedef struct nqueue nqueue;
@@ -73,10 +74,10 @@ void nqueue_init(
     size_t                      size)
 {
     queue->buffer = buffer;
-    queue->head   = UINT32_C(0);
-    queue->tail   = UINT32_C(0);
-    queue->empty  = (uint32_t)size;
-    queue->size   = (uint32_t)size;
+    queue->head   = 0u;
+    queue->tail   = 0u;
+    queue->empty  = (ncpu_reg)size;
+    queue->size   = (ncpu_reg)size;
 }
 
 
@@ -86,10 +87,10 @@ void nqueue_term(
     struct nqueue *             queue)
 {
     queue->buffer = NULL;
-    queue->head   = UINT32_C(0);
-    queue->tail   = UINT32_C(0);
-    queue->empty  = UINT32_C(0);
-    queue->size   = UINT32_C(0);
+    queue->head   = 0u;
+    queue->tail   = 0u;
+    queue->empty  = 0u;
+    queue->size   = 0u;
 }
 
 
@@ -102,7 +103,7 @@ void nqueue_put_head(
     queue->buffer[queue->head++] = item;
 
     if (queue->head == queue->size) {
-        queue->head = UINT32_C(0);
+        queue->head = 0u;
     }
     queue->empty--;
 }
@@ -114,7 +115,7 @@ void nqueue_put_tail(
     struct nqueue *             queue,
     void *                      item)
 {
-    if (queue->tail == UINT32_C(0)) {
+    if (queue->tail == 0u) {
         queue->tail = queue->size;
     }
     queue->buffer[--queue->tail] = item;
@@ -132,7 +133,25 @@ void * nqueue_get_tail(
     tmp = queue->buffer[queue->tail++];
 
     if (queue->tail == queue->size) {
-        queue->tail = UINT32_C(0);
+        queue->tail = 0u;
+    }
+    queue->empty++;
+
+    return (tmp);
+}
+
+
+
+PORT_C_INLINE
+void * nqueue_get_head(
+    struct nqueue *             queue)
+{
+    void *                      tmp;
+
+    tmp = queue->buffer[queue->tail++];
+
+    if (queue->tail == queue->size) {
+        queue->tail = 0u;
     }
     queue->empty++;
 
@@ -181,7 +200,7 @@ PORT_C_INLINE
 bool nqueue_is_full(
     const struct nqueue *       queue)
 {
-    if (queue->empty == UINT32_C(0)) {
+    if (queue->empty == 0u) {
         return (true);
     } else {
         return (false);
