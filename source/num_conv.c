@@ -6,8 +6,8 @@ uint8_t bcd_to_bin(
 {
     uint8_t                     retval;
     
-    retval  = ((data >> 0) & 0xfu) * 1u;
-    retval += ((data >> 4) & 0xfu) * 10u;
+    retval  =   data & 0xfu;
+    retval += ((data >> 4u) & 0xfu) * 10u;
 
     return (retval);
 }
