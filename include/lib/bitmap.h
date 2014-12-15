@@ -129,7 +129,7 @@ uint_fast8_t nbitmap_multi_get_highest(
     group_index = ncpu_log2(bitmap[0].group);
     bit_index   = ncpu_log2(bitmap[group_index + 1u].group);
 
-    return ((group_index << NLOG2_8(NCPU_DATA_WIDTH)) | bit_index);
+    return ((uint_fast8_t)(group_index << NLOG2_8(NCPU_DATA_WIDTH)) | bit_index);
 }
 
 

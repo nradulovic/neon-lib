@@ -4,21 +4,21 @@
 uint8_t bcd_to_bin(
     uint8_t                     data)
 {
-    uint8_t                     retval;
+    uint8_t                     ret;
     
-    retval  =   data & 0xfu;
-    retval += ((data >> 4u) & 0xfu) * 10u;
+    ret = data & 0xfu;
+    ret = (uint8_t)(ret + ((data >> 4u) * 10u));
 
-    return (retval);
+    return (ret);
 }
 
 uint8_t bin_to_bcd(
     uint8_t                     data)
 {
-    uint8_t                     retval;
+    uint8_t                     ret;
 
-    retval  = ((data / 10) & 0xfu) << 4;
-    retval |= ((data % 10) & 0xfu) << 0;
+    ret = ((data / 10) & 0xfu) << 4;
+    ret = (uint8_t)(ret | ((data % 10) & 0xfu) << 0);
 
-    return (retval);
+    return (ret);
 }
