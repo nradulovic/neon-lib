@@ -67,6 +67,16 @@ void ndlist_init(
 
 
 PORT_C_INLINE
+void ndlist_term(
+	struct ndlist *				node)
+{
+	node->next = NULL;
+	node->prev = NULL;
+}
+
+
+
+PORT_C_INLINE
 void ndlist_add_before(
     struct ndlist *             current,
     struct ndlist *             node)

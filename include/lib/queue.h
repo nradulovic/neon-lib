@@ -1,20 +1,20 @@
 /*
- * This file is part of Neon RT Kernel.
+ * This file is part of Neon.
  *
- * Copyright (C) 2010 - 2014 Nenad Radulovic
+ * Copyright (C) 2010 - 2015 Nenad Radulovic
  *
- * Neon RT Kernel is free software: you can redistribute it and/or modify
+ * Neon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Neon RT Kernel is distributed in the hope that it will be useful,
+ * Neon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Neon RT Kernel.  If not, see <http://www.gnu.org/licenses/>.
+ * along with Neon.  If not, see <http://www.gnu.org/licenses/>.
  *
  * web site:    http://github.com/nradulovic
  * e-mail  :    nenad.b.radulovic@gmail.com
@@ -26,8 +26,8 @@
  * @brief       Generic queue
  *********************************************************************//** @{ */
 
-#ifndef NLIB_QUEUE_H_
-#define NLIB_QUEUE_H_
+#ifndef NEON_LIB_QUEUE_H_
+#define NEON_LIB_QUEUE_H_
 
 /*=========================================================  INCLUDE FILES  ==*/
 
@@ -35,8 +35,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include <port/compiler.h>
-#include <port/cpu.h>
+#include "port/compiler.h"
+#include "port/cpu.h"
 
 /*===============================================================  MACRO's  ==*/
 
@@ -54,7 +54,7 @@ extern "C" {
  */
 struct nqueue
 {
-    void **                     buffer;
+    void **                     storage;
     ncpu_reg                    head;
     ncpu_reg                    tail;
     ncpu_reg                    empty;
@@ -70,14 +70,14 @@ typedef struct nqueue nqueue;
 PORT_C_INLINE 
 void nqueue_init(
     struct nqueue *             queue,
-    void **                     buffer,
+    void *                      buffer,
     size_t                      size)
 {
-    queue->buffer = buffer;
-    queue->head   = 0u;
-    queue->tail   = 0u;
-    queue->empty  = (ncpu_reg)size;
-    queue->size   = (ncpu_reg)size;
+    queue->storage = buffer;
+    queue->head    = 0u;
+    queue->tail    = 0u;
+    queue->empty   = (ncpu_reg)size;
+    queue->size    = (ncpu_reg)size;
 }
 
 
@@ -86,21 +86,20 @@ PORT_C_INLINE
 void nqueue_term(
     struct nqueue *             queue)
 {
-    queue->buffer = NULL;
-    queue->head   = 0u;
-    queue->tail   = 0u;
-    queue->empty  = 0u;
-    queue->size   = 0u;
+    queue->head    = 0u;
+    queue->tail    = 0u;
+    queue->empty   = 0u;
+    queue->size    = 0u;
 }
 
 
 
 PORT_C_INLINE 
-void nqueue_put_head(
+void nqueue_put_fifo(
     struct nqueue *             queue,
     void *                      item)
 {
-    queue->buffer[queue->head++] = item;
+    queue->storage[queue->head++] = item;
 
     if (queue->head == queue->size) {
         queue->head = 0u;
@@ -111,44 +110,26 @@ void nqueue_put_head(
 
 
 PORT_C_INLINE 
-void nqueue_put_tail(
+void nqueue_put_lifo(
     struct nqueue *             queue,
     void *                      item)
 {
     if (queue->tail == 0u) {
         queue->tail = queue->size;
     }
-    queue->buffer[--queue->tail] = item;
+    queue->storage[--queue->tail] = item;
     queue->empty--;
 }
 
 
 
-PORT_C_INLINE 
-void * nqueue_get_tail(
-    struct nqueue *             queue)
-{
-    void *                      tmp;
-
-    tmp = queue->buffer[queue->tail++];
-
-    if (queue->tail == queue->size) {
-        queue->tail = 0u;
-    }
-    queue->empty++;
-
-    return (tmp);
-}
-
-
-
 PORT_C_INLINE
-void * nqueue_get_head(
+void * nqueue_get(
     struct nqueue *             queue)
 {
     void *                      tmp;
 
-    tmp = queue->buffer[queue->tail++];
+    tmp = queue->storage[queue->tail++];
 
     if (queue->tail == queue->size) {
         queue->tail = 0u;
@@ -170,15 +151,6 @@ size_t nqueue_size(
 
 
 PORT_C_INLINE 
-size_t nqueue_occupied(
-    const struct nqueue *       queue)
-{
-    return ((size_t)(queue->size - queue->empty));
-}
-
-
-
-PORT_C_INLINE 
 size_t nqueue_unoccupied(
     const struct nqueue *       queue)
 {
@@ -188,10 +160,10 @@ size_t nqueue_unoccupied(
 
 
 PORT_C_INLINE 
-void ** nqueue_buffer(
+void * nqueue_storage(
     const struct nqueue *       queue)
 {
-    return (queue->buffer);
+    return (queue->storage);
 }
 
 
@@ -229,5 +201,5 @@ bool nqueue_is_empty(
 /** @endcond *//** @} *//******************************************************
  * END of queue.h
  ******************************************************************************/
-#endif /* NLIB_QUEUE_H_ */
+#endif /* NEON_LIB_QUEUE_H_ */
 
