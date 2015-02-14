@@ -57,7 +57,7 @@ struct nqueue
     void **                     storage;
     ncpu_reg                    head;
     ncpu_reg                    tail;
-    ncpu_reg                    empty;
+    ncpu_reg                    free;
     ncpu_reg                    size;
 };
 
@@ -70,13 +70,13 @@ typedef struct nqueue nqueue;
 PORT_C_INLINE 
 void nqueue_init(
     struct nqueue *             queue,
-    void *                      buffer,
+    void *                      storage,
     size_t                      size)
 {
-    queue->storage = buffer;
+    queue->storage = storage;
     queue->head    = 0u;
     queue->tail    = 0u;
-    queue->empty   = (ncpu_reg)size;
+    queue->free    = (ncpu_reg)size;
     queue->size    = (ncpu_reg)size;
 }
 
@@ -88,7 +88,7 @@ void nqueue_term(
 {
     queue->head    = 0u;
     queue->tail    = 0u;
-    queue->empty   = 0u;
+    queue->free   = 0u;
     queue->size    = 0u;
 }
 
@@ -104,7 +104,7 @@ void nqueue_put_fifo(
     if (queue->head == queue->size) {
         queue->head = 0u;
     }
-    queue->empty--;
+    queue->free--;
 }
 
 
@@ -118,7 +118,7 @@ void nqueue_put_lifo(
         queue->tail = queue->size;
     }
     queue->storage[--queue->tail] = item;
-    queue->empty--;
+    queue->free--;
 }
 
 
@@ -134,7 +134,7 @@ void * nqueue_get(
     if (queue->tail == queue->size) {
         queue->tail = 0u;
     }
-    queue->empty++;
+    queue->free++;
 
     return (tmp);
 }
@@ -151,10 +151,10 @@ size_t nqueue_size(
 
 
 PORT_C_INLINE 
-size_t nqueue_unoccupied(
+size_t nqueue_free(
     const struct nqueue *       queue)
 {
-    return ((size_t)queue->empty);
+    return ((size_t)queue->free);
 }
 
 
@@ -172,10 +172,10 @@ PORT_C_INLINE
 bool nqueue_is_full(
     const struct nqueue *       queue)
 {
-    if (queue->empty == 0u) {
-        return (true);
-    } else {
+    if (queue->free) {
         return (false);
+    } else {
+        return (true);
     }
 }
 
@@ -185,7 +185,7 @@ PORT_C_INLINE
 bool nqueue_is_empty(
     const struct nqueue *       queue)
 {
-    if (queue->empty == queue->size) {
+    if (queue->free == queue->size) {
         return (true);
     } else {
         return (false);
