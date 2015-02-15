@@ -20,7 +20,7 @@
  * e-mail  :    nenad.b.radulovic@gmail.com
  *//***********************************************************************//**
  * @file
- * @author  	Nenad Radulovic
+ * @author      Nenad Radulovic
  * @brief       Priority queue header
  * @defgroup    priority_queue Priority queue
  * @brief       Priority queue
@@ -48,17 +48,17 @@
 extern "C" {
 #endif
 
-#define NBITMAP_DIM(max_index)													\
-	NDIVISION_ROUNDUP((max_index), NCPU_DATA_WIDTH)
+#define NBITMAP_DIM(max_index)                                                  \
+    NDIVISION_ROUNDUP((max_index), NCPU_DATA_WIDTH)
 
-#define NBITMAP_IS_SINGLE(max_index)											\
-	((max_index) <= NCPU_DATA_WIDTH)
+#define NBITMAP_IS_SINGLE(max_index)                                            \
+    ((max_index) <= NCPU_DATA_WIDTH)
 
 /*============================================================  DATA TYPES  ==*/
 
 struct nbitmap
 {
-	ncpu_reg            		group;
+    ncpu_reg                    group;
 };
 
 /*======================================================  GLOBAL VARIABLES  ==*/
@@ -67,52 +67,52 @@ struct nbitmap
 
 PORT_C_INLINE
 void nbitmap_multi_init(
-    struct nbitmap *       		bitmap,
-	size_t						size)
+    struct nbitmap *            bitmap,
+    size_t                      size)
 {
-	size /= sizeof(struct nbitmap [1]);
+    size /= sizeof(struct nbitmap [1]);
 
-	while (size-- != 0) {
-		bitmap[size].group = 0u;
-	}
+    while (size-- != 0) {
+        bitmap[size].group = 0u;
+    }
 }
 
 
 
 PORT_C_INLINE
 void nbitmap_multi_set(
-    struct nbitmap *        	bitmap,
-    uint_fast8_t                index)
-{
-	uint_fast8_t            	group_index;
-	uint_fast8_t            	bit_index;
-
-	bit_index   = index & ((uint_fast8_t)~0u >> (sizeof(index) * 8u -
-		NLOG2_8(NCPU_DATA_WIDTH)));
-	group_index = index >> NLOG2_8(NCPU_DATA_WIDTH);
-	bitmap[0].group                |= ncpu_exp2(group_index);
-	bitmap[group_index + 1u].group |= ncpu_exp2(bit_index);
-}
-
-
-
-PORT_C_INLINE
-void nbitmap_multi_clear(
-    struct nbitmap *       		bitmap,
+    struct nbitmap *            bitmap,
     uint_fast8_t                index)
 {
     uint_fast8_t                group_index;
     uint_fast8_t                bit_index;
 
     bit_index   = index & ((uint_fast8_t)~0u >> (sizeof(index) * 8u -
-			NLOG2_8(NCPU_DATA_WIDTH)));
+        NLOG2_8(NCPU_DATA_WIDTH)));
+    group_index = index >> NLOG2_8(NCPU_DATA_WIDTH);
+    bitmap[0].group                |= ncpu_exp2(group_index);
+    bitmap[group_index + 1u].group |= ncpu_exp2(bit_index);
+}
+
+
+
+PORT_C_INLINE
+void nbitmap_multi_clear(
+    struct nbitmap *            bitmap,
+    uint_fast8_t                index)
+{
+    uint_fast8_t                group_index;
+    uint_fast8_t                bit_index;
+
+    bit_index   = index & ((uint_fast8_t)~0u >> (sizeof(index) * 8u -
+            NLOG2_8(NCPU_DATA_WIDTH)));
     group_index = index >> NLOG2_8(NCPU_DATA_WIDTH);
     bitmap[group_index + 1u].group &= ~ncpu_exp2(bit_index);
 
     if (bitmap[group_index + 1u].group == 0u) {
-    									/* If this is the last bit cleared in */
+                                        /* If this is the last bit cleared in */
                                         /* this row then clear bit in group   */
-                                        /* indicator, too.              	  */
+                                        /* indicator, too.                    */
         bitmap[0].group &= ~ncpu_exp2(group_index);
     }
 }
@@ -121,7 +121,7 @@ void nbitmap_multi_clear(
 
 PORT_C_INLINE
 uint_fast8_t nbitmap_multi_get_highest(
-    const struct nbitmap * 		bitmap)
+    const struct nbitmap *      bitmap)
 {
     uint_fast8_t                group_index;
     uint_fast8_t                bit_index;
@@ -136,26 +136,26 @@ uint_fast8_t nbitmap_multi_get_highest(
 
 PORT_C_INLINE
 void nbitmap_single_init(
-	struct nbitmap *			bitmap)
+    struct nbitmap *            bitmap)
 {
-	bitmap[0].group = 0u;
+    bitmap[0].group = 0u;
 }
 
 
 
 PORT_C_INLINE
 void nbitmap_single_set(
-	struct nbitmap *			bitmap,
-	uint_fast8_t				index)
+    struct nbitmap *            bitmap,
+    uint_fast8_t                index)
 {
-	bitmap[0].group |= ncpu_exp2(index);
+    bitmap[0].group |= ncpu_exp2(index);
 }
 
 
 
 PORT_C_INLINE
 void nbitmap_single_clear(
-    struct nbitmap *        	bitmap,
+    struct nbitmap *            bitmap,
     uint_fast8_t                index)
 {
     bitmap[0].group &= ~ncpu_exp2(index);
@@ -165,7 +165,7 @@ void nbitmap_single_clear(
 
 PORT_C_INLINE
 uint_fast8_t nbitmap_single_get_highest(
-    const struct nbitmap * 		bitmap)
+    const struct nbitmap *      bitmap)
 {
     uint_fast8_t                index;
 
@@ -178,7 +178,7 @@ uint_fast8_t nbitmap_single_get_highest(
 
 PORT_C_INLINE
 bool nbitmap_is_empty(
-    const struct nbitmap * 		bitmap)
+    const struct nbitmap *      bitmap)
 {
     if (bitmap[0].group == 0u) {
         return (true);

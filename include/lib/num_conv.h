@@ -6,11 +6,11 @@
  */
 
 #ifndef NUM_CONV_H
-#define	NUM_CONV_H
+#define NUM_CONV_H
 
 #include <stdint.h>
 
-#ifdef	__cplusplus
+#ifdef  __cplusplus
 extern "C" {
 #endif
 
@@ -22,9 +22,9 @@ uint8_t bin_to_bcd(
     uint8_t                     data);
 
 
-#ifdef	__cplusplus
+#ifdef  __cplusplus
 }
 #endif
 
-#endif	/* NUM_CONV_H */
+#endif  /* NUM_CONV_H */
 

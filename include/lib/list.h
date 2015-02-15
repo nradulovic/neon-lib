@@ -20,7 +20,7 @@
  * e-mail  :    nenad.b.radulovic@gmail.com
  *//***********************************************************************//**
  * @file
- * @author  	Nenad Radulovic
+ * @author      Nenad Radulovic
  * @brief       Linked lists header
  * @defgroup    linked_list Linked lists
  * @brief       Linked lists
@@ -68,10 +68,10 @@ void ndlist_init(
 
 PORT_C_INLINE
 void ndlist_term(
-	struct ndlist *				node)
+    struct ndlist *             node)
 {
-	node->next = NULL;
-	node->prev = NULL;
+    node->next = NULL;
+    node->prev = NULL;
 }
 
 

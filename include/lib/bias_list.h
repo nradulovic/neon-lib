@@ -20,7 +20,7 @@
  * e-mail  :    nenad.b.radulovic@gmail.com
  *//***********************************************************************//**
  * @file
- * @author  	Nenad Radulovic
+ * @author      Nenad Radulovic
  * @brief       Bias linked lists header
  * @defgroup    bias_linked_list Bias linked lists
  * @brief       Bias linked lists
@@ -73,10 +73,10 @@ void nbias_list_init(
 
 PORT_C_INLINE
 void nbias_list_term(
-	struct nbias_list *			node)
+    struct nbias_list *         node)
 {
-	node->bias = 0;
-	ndlist_term(&node->list);
+    node->bias = 0;
+    ndlist_term(&node->list);
 }
 
 

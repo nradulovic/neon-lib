@@ -20,7 +20,7 @@
  * e-mail  :    nenad.b.radulovic@gmail.com
  *//***********************************************************************//**
  * @file
- * @author  	Nenad Radulovic
+ * @author      Nenad Radulovic
  * @brief       Common bit/logic operations
  * @defgroup    bitop_intf Common bit/logic operations
  * @brief       Common bit/logic operations
@@ -167,11 +167,11 @@ extern "C" {
 PORT_C_INLINE
 bool bitop_is_power_of2(ncpu_reg value)
 {
-	if ((value != 0u) && ((value & (value - 1)) == 0u)) {
-		return (true);
-	} else {
-		return (false);
-	}
+    if ((value != 0u) && ((value & (value - 1)) == 0u)) {
+        return (true);
+    } else {
+        return (false);
+    }
 }
 
 /*--------------------------------------------------------  C++ extern end  --*/
