@@ -34,6 +34,7 @@
 #include <stdbool.h>
 
 #include "port/compiler.h"
+#include "port/cpu.h"
 
 /*===============================================================  MACRO's  ==*/
 
