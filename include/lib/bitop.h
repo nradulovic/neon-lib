@@ -34,7 +34,6 @@
 #include <stdbool.h>
 
 #include "port/compiler.h"
-#include "port/cpu.h"
 
 /*===============================================================  MACRO's  ==*/
 
@@ -166,7 +165,7 @@ extern "C" {
 /*===================================================  FUNCTION PROTOTYPES  ==*/
 
 PORT_C_INLINE
-bool bitop_is_power_of2(ncpu_reg value)
+bool bitop_is_power_of2(unsigned int value)
 {
     if ((value != 0u) && ((value & (value - 1)) == 0u)) {
         return (true);
