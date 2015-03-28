@@ -1,5 +1,5 @@
 
-#include "lib/num_conv.h"
+#include "lib/string/num_conv.h"
 
 uint8_t bcd_to_bin(
     uint8_t                     data)
