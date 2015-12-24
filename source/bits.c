@@ -49,7 +49,7 @@ uint32_t n_log2_int(uint32_t v)
 	    LT(4), LT(5), LT(5), LT(6), LT(6), LT(6), LT(6),
 	    LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
 	};
-	unsigned 					r;
+	unsigned int				r;
 	register unsigned int 		t;
 	register unsigned int		tt;
 
