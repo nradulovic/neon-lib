@@ -17,7 +17,9 @@ by `lib/config.h` file.
 
 ### Source files
 
-- `lib/source/misc/num_bcd_conv.c` - BCD conversion helper functions
+- `lib/source/string/num_bcd_conv.c` - BCD conversion helper functions
+- `lib/source/bits.c` - bit and logic operations
+- `lib/source/checksum.c` - checksum calculation
 
 ### Project dependencies
 
