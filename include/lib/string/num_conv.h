@@ -18,8 +18,18 @@ extern "C" {
 uint8_t bcd_to_bin(
     uint8_t                     data);
 
-uint8_t bin_to_bcd(
+
+
+uint8_t bcd_from_bcd(
     uint8_t                     data);
+
+
+
+uint32_t ascii_hex_to_bin(char hex);
+
+
+
+char ascii_hex_from_bin(uint32_t bin);
 
 
 #ifdef  __cplusplus
