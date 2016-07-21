@@ -275,8 +275,8 @@ nerror argparse_get_argument(struct argparse * argparse, const char * name, void
 	struct argument *			argument;
 	struct ndlist *				current;
 	nerror						error;
-	uint32_t					idx;
-	uint32_t					name_idx;
+	int							idx;
+	int							name_idx;
 
 	current = ndlist_next(&argparse->list);
 
@@ -301,9 +301,9 @@ nerror argparse_get_argument(struct argparse * argparse, const char * name, void
 	}
 
 	if (name_idx) {
-		uint32_t 				val_idx;
+		int 					val_idx;
 
-		val_idx = name_idx + 1u;
+		val_idx = name_idx + 1;
 
 		if (val_idx <= argparse->argc) {
 			switch (argument->type) {

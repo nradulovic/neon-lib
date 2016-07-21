@@ -17,5 +17,5 @@ uint8_t nchecksum_of(const void * data, size_t size)
 		checksum_ += *data_++;
 	}
 
-	return (-(uint8_t)checksum_);
+	return ((uint8_t)-(int8_t)checksum_);
 }
