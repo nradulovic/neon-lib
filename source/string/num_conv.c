@@ -12,7 +12,7 @@ uint8_t bcd_to_bin(
     return (ret);
 }
 
-uint8_t bcd_from_bcd(
+uint8_t bcd_from_bin(
     uint8_t                     data)
 {
     uint8_t                     ret;

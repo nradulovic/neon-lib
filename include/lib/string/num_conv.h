@@ -20,7 +20,7 @@ uint8_t bcd_to_bin(
 
 
 
-uint8_t bcd_from_bcd(
+uint8_t bcd_from_bin(
     uint8_t                     data);
 
 
