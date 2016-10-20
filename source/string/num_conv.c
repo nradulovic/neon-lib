@@ -72,7 +72,7 @@ char ascii_hex_from_bin(uint32_t bin)
 		case 13:
 		case 14:
 		case 15:
-			return ((char)((0x0fu & bin) + 'A'));
+			return ((char)((0x0fu & bin) - 10 + 'A'));
 		default:
 			return (0);
 	}
