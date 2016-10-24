@@ -46,7 +46,8 @@ uint32_t ascii_hex_to_bin(char hex)
 		case 'e':
 		case 'f':
 			return ((unsigned)hex - 'a' + 10);
-		default : return (0);
+		default : 
+            return ((uint32_t)-1);
 	}
 }
 
@@ -54,7 +55,9 @@ uint32_t ascii_hex_to_bin(char hex)
 
 char ascii_hex_from_bin(uint32_t bin)
 {
-	switch (0x0fu & bin) {
+    bin &= 0x0fu;
+
+	switch (bin) {
 		case 0:
 		case 1:
 		case 2:
@@ -65,14 +68,14 @@ char ascii_hex_from_bin(uint32_t bin)
 		case 7:
 		case 8:
 		case 9:
-			return ((char)((0x0fu & bin) + '0'));
+			return ((char)(bin + '0'));
 		case 10:
 		case 11:
 		case 12:
 		case 13:
 		case 14:
 		case 15:
-			return ((char)((0x0fu & bin) - 10 + 'A'));
+			return ((char)(bin + 'a' - 10));
 		default:
 			return (0);
 	}
