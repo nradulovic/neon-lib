@@ -53,10 +53,10 @@ uint32_t n_log2_int(uint32_t v)
 	register unsigned int 		t;
 	register unsigned int		tt;
 
-	if ((tt = v) >> 16) {
+	if ((tt = (unsigned char)v) >> 16) {
 	  r = ((t = tt) >> 8u) ? 24u + log_table_256[t] : 16u + log_table_256[tt];
 	} else {
-	  r = ((t = v)  >> 8u) ? 8u  + log_table_256[t] :      log_table_256[v];
+	  r = ((t = (unsigned char)v)  >> 8u) ? 8u  + log_table_256[t] : log_table_256[v];
 	}
 
 	return (r);
