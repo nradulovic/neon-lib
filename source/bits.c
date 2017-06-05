@@ -42,24 +42,24 @@
 
 uint32_t n_log2_int(uint32_t v)
 {
-	static const unsigned char 	log_table_256[256] =
-	{
-		#define LT(n) n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n
-	    (unsigned char)-1, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
-	    LT(4), LT(5), LT(5), LT(6), LT(6), LT(6), LT(6),
-	    LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
-	};
-	unsigned int				r;
-	register unsigned int 		t;
-	register unsigned int		tt;
+    static const unsigned char  log_table_256[256] =
+    {
+        #define LT(n) n, n, n, n, n, n, n, n, n, n, n, n, n, n, n, n
+        (unsigned char)-1, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
+        LT(4), LT(5), LT(5), LT(6), LT(6), LT(6), LT(6),
+        LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7), LT(7)
+    };
+    unsigned int                r;
+    register unsigned int       t;
+    register unsigned int       tt;
 
-	if ((tt = (unsigned char)v) >> 16) {
-	  r = ((t = tt) >> 8u) ? 24u + log_table_256[t] : 16u + log_table_256[tt];
-	} else {
-	  r = ((t = (unsigned char)v)  >> 8u) ? 8u  + log_table_256[t] : log_table_256[v];
-	}
+    if ((tt = (unsigned char)v) >> 16) {
+      r = ((t = tt) >> 8u) ? 24u + log_table_256[t] : 16u + log_table_256[tt];
+    } else {
+      r = ((t = (unsigned char)v)  >> 8u) ? 8u  + log_table_256[t] : log_table_256[v];
+    }
 
-	return (r);
+    return (r);
 }
 
 

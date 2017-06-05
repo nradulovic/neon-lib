@@ -46,9 +46,9 @@ struct argparse_argument;
 
 enum argparse_type
 {
-	ARGPARSE_NONE,
-	ARGPARSE_INT,
-	ARGPARSE_STRING
+    ARGPARSE_NONE,
+    ARGPARSE_INT,
+    ARGPARSE_STRING
 };
 
 /*======================================================  GLOBAL VARIABLES  ==*/

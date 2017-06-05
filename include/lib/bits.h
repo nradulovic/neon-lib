@@ -46,10 +46,10 @@ extern "C" {
 /*===================================================  FUNCTION PROTOTYPES  ==*/
 
 
-/**@brief		Compute logarithm base 2 of v value
- * @param 		v
- * @return		Log2(v)
- * @details		If v equals zero the returned value will be 255.
+/**@brief       Compute logarithm base 2 of v value
+ * @param       v
+ * @return      Log2(v)
+ * @details     If v equals zero the returned value will be 255.
  */
 uint32_t n_log2_int(uint32_t v);
 
